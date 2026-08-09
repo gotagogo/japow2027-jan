@@ -2,6 +2,8 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 
+const assetPath = (path: string) => `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}${path}`;
+
 type Stop = { kind: "ski" | "onsen" | "hotel" | "meet" | "free"; name: string; en?: string; note: string; map?: string; trail?: string };
 type Day = { date: string; weekday: string; title: string; travel?: string; returnTravel?: string; stops: Stop[] };
 type Extra = { tags: string[]; feature: string; price?: string; hours?: string; warning?: string; source?: string };
@@ -110,7 +112,7 @@ export default function Home() {
   return (
     <main className="site-shell">
       <header className="hero">
-        <img src="/assets/tohoku-hero.png" alt="東北雪國單板自駕旅行" />
+        <img src={assetPath("/assets/tohoku-hero.png")} alt="東北雪國單板自駕旅行" />
         <div className="hero-shade" />
         <div className="hero-copy">
           <span className="eyebrow">2027 JAN · TOHOKU</span>
@@ -161,7 +163,7 @@ export default function Home() {
                 </div>}
                 <div className="links">
                   {stop.map && <a href={stop.map} target="_blank" rel="noreferrer">↗ {en ? "Navigation" : "開啟導航"}</a>}
-                  {stop.trail && <a href={stop.trail} target="_blank" rel="noreferrer">▧ {en ? "Trail map" : "雪場地圖"}</a>}
+                  {stop.trail && <a href={assetPath(stop.trail)} target="_blank" rel="noreferrer">▧ {en ? "Trail map" : "雪場地圖"}</a>}
                 </div>
               </article>
               {index === 0 && dailyOnsen && <Travel time="泡湯" label="滑後安排" />}
@@ -188,7 +190,7 @@ export default function Home() {
       </Modal>}
 
       {mapOpen && <Modal onClose={() => setMapOpen(false)} title="雪場 × 酒店動線">
-        <img className="route-map" src="/assets/route-map.png" alt="東北十三雪場與酒店移動地圖" />
+        <img className="route-map" src={assetPath("/assets/route-map.png")} alt="東北十三雪場與酒店移動地圖" />
       </Modal>}
     </main>
   );
